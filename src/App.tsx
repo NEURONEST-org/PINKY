@@ -13,57 +13,34 @@ import Reminders from './components/Reminders';
 import Recognition from './components/Recognition';
 import MusicTherapy from './components/MusicTherapy';
 import VoiceNotes from './components/VoiceNotes';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from './components/Dashboard';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [activeTab, setActiveTab] = useState('dashboard');
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
-  };
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'recognition':
-        return <Recognition isDarkMode={isDarkMode} />;
-      case 'chat':
-        return <Chat isDarkMode={isDarkMode} />;
-      case 'activities':
-        return <Activities isDarkMode={isDarkMode} />;
-      case 'journal':
-        return <Journal isDarkMode={isDarkMode} />;
-      case 'safety':
-        return <Safety isDarkMode={isDarkMode} />;
-      case 'tasks':
-        return <Tasks isDarkMode={isDarkMode} />;
-      case 'mood':
-        return <MoodTracker isDarkMode={isDarkMode} />;
-      case 'reminders':
-        return <Reminders isDarkMode={isDarkMode} />;
-      case 'music':
-        return <MusicTherapy isDarkMode={isDarkMode} />;
-      case 'voice':
-        return <VoiceNotes isDarkMode={isDarkMode} />;
-      default:
-        return (
-          <>
-            <QuickActions isDarkMode={isDarkMode} />
-            <Schedule isDarkMode={isDarkMode} />
-          </>
-        );
-    }
-  };
-
+  
+  
+ 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} isDarkMode={isDarkMode} />
-      
-      <div className="ml-64 p-8">
-        <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-        {renderContent()}
-      </div>
-    </div>
+    <>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Dashboard/>} />
+      <Route path="/recognition" element={<Recognition/>}/>
+      <Route path="/safety-zones" element={<Safety/>}/>
+      <Route path='/chat' element={<Chat/>}/>
+      <Route path='/mood-tracker' element={<MoodTracker/>}/>
+      <Route path='/reminders' element={<Reminders/>}/>
+      <Route path='/voice-notes' element={<VoiceNotes/>}/>
+      <Route path='/music-therapy' element={<MusicTherapy/>}/>
+      <Route path='/activities' element={<Activities/>}/>
+      <Route path='/journal' element={<Journal/>}/>
+      <Route path='/schedule' element={<Schedule/>}/>
+      <Route path='/quick-actions' element={<QuickActions/>}/>
+      <Route path='/tasks' element={<Tasks/>}/>
+    </Routes>
+  </BrowserRouter>
+  
+    </>
   );
 }
 

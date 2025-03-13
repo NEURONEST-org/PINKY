@@ -14,9 +14,12 @@
     "@tensorflow-models/face-detection": "^1.0.2",
     "@tensorflow/tfjs": "^4.17.0",
     "date-fns": "^3.3.1",
+    "framer-motion": "^12.5.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-intersection-observer": "^9.16.0",
+    "react-router-dom": "^7.3.0",
     "react-webcam": "^7.2.0",
     "uuid": "^9.0.1"
   },
