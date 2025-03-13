@@ -1,10 +1,8 @@
 import React from 'react';
+import Sidebar from './Sidebar';
 
-interface ScheduleProps {
-  isDarkMode: boolean;
-}
 
-export default function Schedule({ isDarkMode }: ScheduleProps) {
+export default function Schedule() {
   const scheduleItems = [
     { time: '9:00 AM', task: 'Morning Medicine', type: 'Medication' },
     { time: '10:30 AM', task: 'Memory Game Session', type: 'Activity' },
@@ -13,17 +11,17 @@ export default function Schedule({ isDarkMode }: ScheduleProps) {
   ];
 
   return (
-    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
-      <h3 className={`text-xl font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+    <>
+    <Sidebar/>
+    <div className={` '} rounded-xl shadow-lg p-6`}>
+      <h3 className={`text-xl font-semibold mb-4  'text-gray-900'`}>
         Today's Schedule
       </h3>
       <div className="space-y-4">
         {scheduleItems.map((item, index) => (
           <div
             key={index}
-            className={`flex items-center justify-between p-4 rounded-lg ${
-              isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
-            }`}
+            className={`flex items-center justify-between p-4 rounded-lg  'bg-gray-50'`}
           >
             <div className="flex items-center space-x-4">
               <div
@@ -36,8 +34,8 @@ export default function Schedule({ isDarkMode }: ScheduleProps) {
                 }`}
               />
               <div>
-                <p className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{item.task}</p>
-                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{item.time}</p>
+                <p className={`font-medium  'text-gray-900'`}>{item.task}</p>
+                <p className={`text-sm  'text-gray-600'`}>{item.time}</p>
               </div>
             </div>
             <span
@@ -55,5 +53,6 @@ export default function Schedule({ isDarkMode }: ScheduleProps) {
         ))}
       </div>
     </div>
+    </>
   );
 }

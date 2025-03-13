@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Smartphone, MapPin, Shield } from 'lucide-react';
+import Sidebar from './Sidebar';
 
-interface SafetyProps {
-  isDarkMode: boolean;
-}
 
-export default function Safety({ isDarkMode }: SafetyProps) {
+
+export default function Safety() {
   const [activeSection, setActiveSection] = useState<'phone' | 'tracker' | 'zones'>('phone');
 
   const sections = [
@@ -15,7 +14,9 @@ export default function Safety({ isDarkMode }: SafetyProps) {
   ];
 
   return (
-    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+    <>
+    <Sidebar/>
+    <div className="bg-white rounded-xl shadow-lg p-6 ml-72">
       <div className="flex space-x-4 mb-6">
         {sections.map(({ id, icon: Icon, label }) => (
           <button
@@ -24,7 +25,7 @@ export default function Safety({ isDarkMode }: SafetyProps) {
             className={`flex items-center px-4 py-2 rounded-lg ${
               activeSection === id
                 ? 'bg-purple-600 text-white'
-                : `${isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'}`
+                :  'bg-gray-100 text-gray-600'
             }`}
           >
             <Icon className="h-5 w-5 mr-2" />
@@ -42,11 +43,11 @@ export default function Safety({ isDarkMode }: SafetyProps) {
 
       {activeSection === 'zones' && (
         <div className="space-y-4">
-          <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-            <h3 className={`font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+          <div className="p-4 rounded-lg  bg-gray-50">
+            <h3 className="font-semibold mb-2 text-gray-900">
               Home Zone
             </h3>
-            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className="text-sm 'text-gray-600'">
               500m radius around home
             </p>
           </div>
@@ -56,5 +57,6 @@ export default function Safety({ isDarkMode }: SafetyProps) {
         </div>
       )}
     </div>
+    </>
   );
 }

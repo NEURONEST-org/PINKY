@@ -4,12 +4,11 @@ import * as faceDetection from '@tensorflow-models/face-detection';
 import * as cocoSsd from '@tensorflow-models/coco-ssd';
 import '@tensorflow/tfjs';
 import { Camera, Eye } from 'lucide-react';
+import Sidebar from './Sidebar';
 
-interface RecognitionProps {
-  isDarkMode: boolean;
-}
 
-export default function Recognition({ isDarkMode }: RecognitionProps) {
+
+export default function Recognition() {
   const webcamRef = useRef<Webcam | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [mode, setMode] = useState<'face' | 'object'>('face');
@@ -67,7 +66,7 @@ export default function Recognition({ isDarkMode }: RecognitionProps) {
 
     if (mode === 'face') {
       const detector = await loadFaceDetector();
-      const faces = await detector.detectFaces(video);
+      const faces = await detector.detect(video);
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       drawFaceDetections(faces, ctx);
     } else {
@@ -91,14 +90,17 @@ export default function Recognition({ isDarkMode }: RecognitionProps) {
   }, [isDetecting, mode]);
 
   return (
-    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+  <>
+    <Sidebar/>
+    <div className={` rounded-xl shadow-lg p-6 ml-80`}>
+     
       <div className="flex space-x-4 mb-6">
         <button
           onClick={() => setMode('face')}
           className={`flex items-center px-4 py-2 rounded-lg ${
             mode === 'face'
               ? 'bg-purple-600 text-white'
-              : `${isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'}`
+              : 'bg-gray-100 text-gray-600'
           }`}
         >
           <Camera className="h-5 w-5 mr-2" />
@@ -109,7 +111,7 @@ export default function Recognition({ isDarkMode }: RecognitionProps) {
           className={`flex items-center px-4 py-2 rounded-lg ${
             mode === 'object'
               ? 'bg-purple-600 text-white'
-              : `${isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'}`
+              :  'bg-gray-100 text-gray-600'
           }`}
         >
           <Eye className="h-5 w-5 mr-2" />
@@ -152,5 +154,6 @@ export default function Recognition({ isDarkMode }: RecognitionProps) {
         )}
       </div>
     </div>
+    </>
   );
 }

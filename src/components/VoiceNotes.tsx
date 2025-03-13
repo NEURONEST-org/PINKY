@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Mic, Square, Play, Trash2 } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
+import Sidebar from './Sidebar';
 
-interface VoiceNotesProps {
-  isDarkMode: boolean;
-}
+
 
 interface VoiceNote {
   id: string;
@@ -13,7 +12,7 @@ interface VoiceNote {
   duration: number;
 }
 
-export default function VoiceNotes({ isDarkMode }: VoiceNotesProps) {
+export default function VoiceNotes() {
   const [isRecording, setIsRecording] = useState(false);
   const [voiceNotes, setVoiceNotes] = useState<VoiceNote[]>([]);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
@@ -89,8 +88,10 @@ export default function VoiceNotes({ isDarkMode }: VoiceNotesProps) {
   };
 
   return (
-    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
-      <h2 className={`text-xl font-semibold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+    <>
+    <Sidebar/>
+    <div className={` 'bg-white' rounded-xl shadow-lg p-6 ml-72`}>
+      <h2 className={`text-xl font-semibold mb-6  'text-gray-900'`}>
         Voice Notes
       </h2>
 
@@ -115,9 +116,7 @@ export default function VoiceNotes({ isDarkMode }: VoiceNotesProps) {
         {voiceNotes.map((note) => (
           <div
             key={note.id}
-            className={`p-4 rounded-lg flex items-center justify-between ${
-              isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
-            }`}
+            className={`p-4 rounded-lg flex items-center justify-between  'bg-gray-50'`}
           >
             <div className="flex items-center space-x-4">
               <button
@@ -125,29 +124,23 @@ export default function VoiceNotes({ isDarkMode }: VoiceNotesProps) {
                 className={`p-2 rounded-full ${
                   currentlyPlaying === note.id
                     ? 'bg-purple-600 text-white'
-                    : isDarkMode
-                    ? 'bg-gray-600 text-gray-300'
                     : 'bg-gray-200 text-gray-600'
                 }`}
               >
                 <Play className="h-5 w-5" />
               </button>
               <div>
-                <p className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                <p className={`font-medium  'text-gray-900'`}>
                   Voice Note
                 </p>
-                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                <p className={`text-sm  'text-gray-600'`}>
                   {formatTimestamp(note.timestamp)} • {formatDuration(note.duration)}
                 </p>
               </div>
             </div>
             <button
               onClick={() => deleteVoiceNote(note.id)}
-              className={`p-2 rounded-full ${
-                isDarkMode
-                  ? 'hover:bg-gray-600 text-gray-400'
-                  : 'hover:bg-gray-200 text-gray-600'
-              }`}
+              className={`p-2 rounded-full  'hover:bg-gray-200 text-gray-600'`}
             >
               <Trash2 className="h-5 w-5" />
             </button>
@@ -155,5 +148,6 @@ export default function VoiceNotes({ isDarkMode }: VoiceNotesProps) {
         ))}
       </div>
     </div>
+    </>
   );
 }

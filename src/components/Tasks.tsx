@@ -1,11 +1,10 @@
 import React from 'react';
 import { Bell, Calendar } from 'lucide-react';
+import Sidebar from './Sidebar';
 
-interface TasksProps {
-  isDarkMode: boolean;
-}
 
-export default function Tasks({ isDarkMode }: TasksProps) {
+
+export default function Tasks() {
   const upcomingReminders = [
     { time: '9:00 AM', task: 'Take morning medication', date: 'Today' },
     { time: '2:30 PM', task: 'Doctor\'s appointment', date: 'Tomorrow' },
@@ -13,9 +12,11 @@ export default function Tasks({ isDarkMode }: TasksProps) {
   ];
 
   return (
-    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+    <>
+    <Sidebar/>
+    <div className={` '} rounded-xl shadow-lg p-6 ml-72`}>
       <div className="flex justify-between items-center mb-6">
-        <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+        <h2 className={`text-xl font-semibold  'text-gray-900'`}>
           Upcoming Reminders
         </h2>
         <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 flex items-center">
@@ -28,17 +29,15 @@ export default function Tasks({ isDarkMode }: TasksProps) {
         {upcomingReminders.map((reminder, index) => (
           <div
             key={index}
-            className={`flex items-center justify-between p-4 rounded-lg ${
-              isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
-            }`}
+            className={`flex items-center justify-between p-4 rounded-lg  'bg-gray-50'`}
           >
             <div className="flex items-center space-x-4">
-              <Calendar className={`h-5 w-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} />
+              <Calendar className={`h-5 w-5  'text-gray-500'`} />
               <div>
-                <p className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                <p className={`font-medium  'text-gray-900'`}>
                   {reminder.task}
                 </p>
-                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                <p className={`text-sm  'text-gray-600'`}>
                   {reminder.date} at {reminder.time}
                 </p>
               </div>
@@ -50,5 +49,6 @@ export default function Tasks({ isDarkMode }: TasksProps) {
         ))}
       </div>
     </div>
+    </>
   );
 }

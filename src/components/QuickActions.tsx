@@ -1,11 +1,10 @@
 import React from 'react';
 import { Camera, Music2, Pencil, VolumeX } from 'lucide-react';
+import Sidebar from './Sidebar';
 
-interface QuickActionsProps {
-  isDarkMode: boolean;
-}
 
-export default function QuickActions({ isDarkMode }: QuickActionsProps) {
+
+export default function QuickActions() {
   const actions = [
     {
       icon: Camera,
@@ -34,23 +33,24 @@ export default function QuickActions({ isDarkMode }: QuickActionsProps) {
   ];
 
   return (
+    <>
+    <Sidebar/>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {actions.map((action, index) => (
         <div
           key={index}
-          className={`${
-            isDarkMode ? 'bg-gray-800' : 'bg-white'
-          } rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105`}
+          className={` 'bg-white' rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105`}
         >
           <div className={`${action.color} w-12 h-12 rounded-lg flex items-center justify-center mb-4`}>
             <action.icon className="h-6 w-6 text-white" />
           </div>
-          <h3 className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+          <h3 className={`text-lg font-semibold mb-2  'text-gray-900'`}>
             {action.title}
           </h3>
-          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{action.description}</p>
+          <p className={` 'text-gray-600'`}>{action.description}</p>
         </div>
       ))}
-    </div>
+            </div>
+            </>
   );
 }

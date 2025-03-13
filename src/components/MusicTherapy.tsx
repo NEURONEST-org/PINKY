@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
+import Sidebar from './Sidebar';
 
-interface MusicTherapyProps {
-  isDarkMode: boolean;
-}
 
-export default function MusicTherapy({ isDarkMode }: MusicTherapyProps) {
+
+export default function MusicTherapy() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -51,34 +50,34 @@ export default function MusicTherapy({ isDarkMode }: MusicTherapyProps) {
   };
 
   return (
-    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
-      <h2 className={`text-xl font-semibold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+    <>
+    <Sidebar/>
+    <div className={` '} rounded-xl shadow-lg p-6 ml-72`}>
+      <h2 className={`text-xl font-semibold mb-6  'text-gray-900'`}>
         Music Therapy
       </h2>
 
-      <div className={`p-6 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'} mb-6`}>
+      <div className={`p-6 rounded-lg  'bg-gray-50' mb-6`}>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h3 className={`font-semibold  'text-gray-900'`}>
               {tracks[currentTrack].title}
             </h3>
-            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className={`text-sm  'text-gray-600'`}>
               {tracks[currentTrack].artist}
             </p>
           </div>
-          <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-            {tracks[currentTrack].duration}
+            <span className={`text-sm  'text-gray-600'`}>
+              {tracks[currentTrack].duration}
           </span>
         </div>
 
         <div className="flex items-center justify-center space-x-6">
           <button
             onClick={playPrevious}
-            className={`p-2 rounded-full ${
-              isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
-            }`}
+            className={`p-2 rounded-full  'hover:bg-gray-200'`}
           >
-            <SkipBack className={isDarkMode ? 'text-gray-300' : 'text-gray-600'} />
+            <SkipBack className={` 'text-gray-600'`} />
           </button>
           <button
             onClick={togglePlay}
@@ -92,16 +91,14 @@ export default function MusicTherapy({ isDarkMode }: MusicTherapyProps) {
           </button>
           <button
             onClick={playNext}
-            className={`p-2 rounded-full ${
-              isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
-            }`}
+            className={`p-2 rounded-full  'hover:bg-gray-200'`}
           >
-            <SkipForward className={isDarkMode ? 'text-gray-300' : 'text-gray-600'} />
+            <SkipForward className={` 'text-gray-600'`} />
           </button>
         </div>
 
         <div className="mt-6 flex items-center space-x-2">
-          <Volume2 className={`h-5 w-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} />
+          <Volume2 className={`h-5 w-5  'text-gray-600'`} />
           <input
             type="range"
             min="0"
@@ -119,8 +116,6 @@ export default function MusicTherapy({ isDarkMode }: MusicTherapyProps) {
             className={`w-full p-4 rounded-lg flex items-center justify-between ${
               currentTrack === index
                 ? 'bg-purple-600 text-white'
-                : isDarkMode
-                ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                 : 'bg-gray-50 text-gray-900 hover:bg-gray-100'
             }`}
           >
@@ -132,16 +127,12 @@ export default function MusicTherapy({ isDarkMode }: MusicTherapyProps) {
               )}
               <div className="text-left">
                 <p className="font-medium">{track.title}</p>
-                <p className={`text-sm ${
-                  currentTrack === index ? 'text-gray-200' : isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                }`}>
+                <p className={`text-sm  'text-gray-600'`}>
                   {track.artist}
                 </p>
               </div>
             </div>
-            <span className={`text-sm ${
-              currentTrack === index ? 'text-gray-200' : isDarkMode ? 'text-gray-400' : 'text-gray-600'
-            }`}>
+            <span className={`text-sm  'text-gray-600'`}>
               {track.duration}
             </span>
           </button>
@@ -153,6 +144,7 @@ export default function MusicTherapy({ isDarkMode }: MusicTherapyProps) {
         src={tracks[currentTrack].url}
         onEnded={playNext}
       />
-    </div>
+          </div>
+          </>
   );
 }
