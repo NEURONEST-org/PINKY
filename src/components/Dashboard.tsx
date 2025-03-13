@@ -11,7 +11,7 @@ import {
   Users,
 } from 'lucide-react';
 import Sidebar from './Sidebar';
-
+import { SignInButton } from '@clerk/clerk-react';
 
 
 export default function Dashboard() {
@@ -113,7 +113,7 @@ export default function Dashboard() {
       </div>
 
       
-
+     <button className="bg-pink-500 text-white px-6 py-1 rounded-2xl " ><SignInButton/></button>
       {/* Hero Section with Image Slideshow */}
       <motion.section
         style={{ scale }}

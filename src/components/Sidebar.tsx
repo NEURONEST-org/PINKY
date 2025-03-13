@@ -15,14 +15,22 @@ import {
   Music,
   Mic
 } from "lucide-react";
+import { SignInButton } from '@clerk/clerk-react';
+import { UserButton } from '@clerk/clerk-react';
+
 
 export default function Sidebar() {
   return (
     <div className="fixed left-0 top-0 h-full w-72 bg-pink-50 text-gray-800 shadow-lg overflow-y-auto p-8">
+
       {/* Sidebar Header */}
+      <UserButton />
       <div className="flex items-center space-x-3 mb-10">
         <Brain className="h-10 w-10 text-pink-500" />
         <h1 className="text-2xl font-bold text-pink-700">NeuroNest</h1>
+        {/* <button className="bg-pink-500 text-white px-6 py-1 rounded-2xl " component="SignInButton">Sign in</button> */}
+        
+       
       </div>
 
       {/* Navigation Buttons */}
