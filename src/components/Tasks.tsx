@@ -14,7 +14,7 @@ export default function Tasks() {
   return (
     <>
     <Sidebar/>
-    <div className={` '} rounded-xl shadow-lg p-6 ml-72`}>
+    <div className={` '} rounded-xl shadow-lg p-6 mL-60`}>
       <div className="flex justify-between items-center mb-6">
         <h2 className={`text-xl font-semibold  'text-gray-900'`}>
           Upcoming Reminders

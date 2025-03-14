@@ -52,7 +52,7 @@ export default function MusicTherapy() {
   return (
     <>
     <Sidebar/>
-    <div className={` '} rounded-xl shadow-lg p-6 ml-72`}>
+    <div className={` '} rounded-xl shadow-lg p-6 mL-60`}>
       <h2 className={`text-xl font-semibold mb-6  'text-gray-900'`}>
         Music Therapy
       </h2>

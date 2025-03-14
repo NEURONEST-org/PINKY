@@ -1,5 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { SignInButton, UserButton } from '@clerk/clerk-react';
 import {
   Brain,
   Home,
@@ -14,110 +15,118 @@ import {
   Settings,
   Music,
   Mic
-} from "lucide-react";
-import { SignInButton } from '@clerk/clerk-react';
-import { UserButton } from '@clerk/clerk-react';
+} from 'lucide-react';
 
+interface SidebarProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  isDarkMode: boolean;
+}
 
-export default function Sidebar() {
+export default function Sidebar({ activeTab, setActiveTab, isDarkMode }: SidebarProps) {
+  const location = useLocation();
+
+  const navItems = [
+    { icon: Home, label: 'Dashboard', id: 'dashboard', path: '/', gradient: 'from-violet-500 to-purple-500' },
+    { icon: Camera, label: 'Recognition', id: 'recognition', path: '/recognition', gradient: 'from-purple-500 to-indigo-500' },
+    { icon: Map, label: 'Safety Zones', id: 'safety', path: '/safety-zones', gradient: 'from-indigo-500 to-blue-500' },
+    { icon: Gamepad2, label: 'Activities', id: 'activities', path: '/activities', gradient: 'from-blue-500 to-cyan-500' },
+    { icon: MessageCircle, label: 'Chat', id: 'chat', path: '/chat', gradient: 'from-cyan-500 to-teal-500' },
+    { icon: Calendar, label: 'Tasks', id: 'tasks', path: '/tasks', gradient: 'from-teal-500 to-emerald-500' },
+    { icon: Pill, label: 'Medication', id: 'medication', path: '/medication', gradient: 'from-emerald-500 to-green-500' },
+    { icon: Smile, label: 'Mood Tracker', id: 'mood', path: '/mood-tracker', gradient: 'from-rose-500 to-pink-500' },
+    { icon: Clock, label: 'Reminders', id: 'reminders', path: '/reminders', gradient: 'from-pink-500 to-fuchsia-500' },
+    { icon: Music, label: 'Music Therapy', id: 'music', path: '/music-therapy', gradient: 'from-fuchsia-500 to-purple-500' },
+    { icon: Mic, label: 'Voice Notes', id: 'voice', path: '/voice-notes', gradient: 'from-purple-500 to-violet-500' },
+    { icon: Settings, label: 'Settings', id: 'settings', path: '/settings', gradient: 'from-gray-500 to-slate-500' },
+  ];
+
   return (
-    <div className="fixed left-0 top-0 h-full w-72 bg-pink-50 text-gray-800 shadow-lg overflow-y-auto p-8">
-
-      {/* Sidebar Header */}
-      <UserButton />
-      <div className="flex items-center space-x-3 mb-10">
-        <Brain className="h-10 w-10 text-pink-500" />
-        <h1 className="text-2xl font-bold text-pink-700">NeuroNest</h1>
-        {/* <button className="bg-pink-500 text-white px-6 py-1 rounded-2xl " component="SignInButton">Sign in</button> */}
+    <div
+      className={`fixed left-0 top-0 h-full w-72 ${
+        isDarkMode ? 'bg-gray-900/95' : 'bg-white/95'
+      } shadow-xl overflow-y-auto border-r backdrop-blur-md ${
+        isDarkMode ? 'border-gray-800' : 'border-gray-100'
+      }`}
+    >
+      <div className="sticky top-0 z-10 p-6 border-b border-gray-100/10 backdrop-blur-xl bg-opacity-90">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg shadow-purple-500/20">
+              <Brain className="h-6 w-6 text-white animate-pulse" />
+            </div>
+            <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+              NeuroNest
+            </h1>
+          </div>
+        </div>
         
-       
+        <div className="flex items-center justify-between">
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                avatarBox: "h-10 w-10"
+              }
+            }}
+          />
+          <SignInButton mode="modal">
+            <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-medium hover:opacity-90 transition-opacity">
+              Sign in
+            </button>
+          </SignInButton>
+        </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <nav className="space-y-4">
-        <Link to="/">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-pink-100 to-pink-200 hover:from-pink-200 hover:to-pink-300 text-pink-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Home className="h-5 w-5 mr-4" />
-            Home
-          </button>
-        </Link>
-
-        <Link to="/recognition">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-purple-100 to-purple-200 hover:from-purple-200 hover:to-purple-300 text-purple-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Camera className="h-5 w-5 mr-4" />
-            Recognition
-          </button>
-        </Link>
-
-        <Link to="/safety-zones">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-rose-100 to-rose-200 hover:from-rose-200 hover:to-rose-300 text-rose-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Map className="h-5 w-5 mr-4" />
-            Safety Zones
-          </button>
-        </Link>
-
-        <Link to="/activities">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-orange-100 to-orange-200 hover:from-orange-200 hover:to-orange-300 text-orange-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Gamepad2 className="h-5 w-5 mr-4" />
-            Activities
-          </button>
-        </Link>
-
-        <Link to="/chat">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-fuchsia-100 to-fuchsia-200 hover:from-fuchsia-200 hover:to-fuchsia-300 text-fuchsia-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <MessageCircle className="h-5 w-5 mr-4" />
-            Chat
-          </button>
-        </Link>
-
-        <Link to="/tasks">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-red-100 to-red-200 hover:from-red-200 hover:to-red-300 text-red-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Calendar className="h-5 w-5 mr-4" />
-            Tasks
-          </button>
-        </Link>
-
-        <Link to="/medication">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-amber-100 to-amber-200 hover:from-amber-200 hover:to-amber-300 text-amber-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Pill className="h-5 w-5 mr-4" />
-            Medication
-          </button>
-        </Link>
-
-        <Link to="/mood-tracker">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-violet-100 to-violet-200 hover:from-violet-200 hover:to-violet-300 text-violet-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Smile className="h-5 w-5 mr-4" />
-            Mood Tracker
-          </button>
-        </Link>
-
-        <Link to="/reminders">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-sky-100 to-sky-200 hover:from-sky-200 hover:to-sky-300 text-sky-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Clock className="h-5 w-5 mr-4" />
-            Reminders
-          </button>
-        </Link>
-
-        <Link to="/music-therapy">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-indigo-100 to-indigo-200 hover:from-indigo-200 hover:to-indigo-300 text-indigo-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Music className="h-5 w-5 mr-4" />
-            Music Therapy
-          </button>
-        </Link>
-
-        <Link to="/voice-notes">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-teal-100 to-teal-200 hover:from-teal-200 hover:to-teal-300 text-teal-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Mic className="h-5 w-5 mr-4" />
-            Voice Notes
-          </button>
-        </Link>
-
-        <Link to="/settings">
-          <button className="w-full flex items-center px-8 py-4 text-sm bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]">
-            <Settings className="h-5 w-5 mr-4" />
-            Settings
-          </button>
-        </Link>
+      <nav className="p-4">
+        <div className="space-y-2">
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={item.id}
+                to={item.path}
+                onClick={() => setActiveTab(item.id)}
+                className={`
+                  block w-full group relative
+                  ${isActive ? 'scale-[1.02]' : ''}
+                `}
+              >
+                <div
+                  className={`
+                    absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100
+                    transition-opacity duration-300 bg-gradient-to-r ${item.gradient}
+                    ${isDarkMode ? 'opacity-10' : 'opacity-5'}
+                  `}
+                />
+                <div
+                  className={`
+                    relative flex items-center px-4 py-3 rounded-xl
+                    transition-all duration-300 ease-out
+                    ${
+                      isActive
+                        ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
+                        : isDarkMode
+                        ? 'text-gray-400 hover:text-white'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }
+                  `}
+                >
+                  <item.icon className={`
+                    h-5 w-5 mr-3
+                    transition-all duration-300
+                    group-hover:scale-110 group-hover:rotate-3
+                    ${isActive ? 'text-white' : ''}
+                  `} />
+                  <span className="font-medium text-sm">{item.label}</span>
+                  {isActive && (
+                    <div className="absolute right-2 w-2 h-2 rounded-full bg-white/50" />
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </nav>
     </div>
   );
