@@ -16,13 +16,14 @@ import VoiceNotes from './components/VoiceNotes';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from './components/Dashboard';
 import Medication from './components/Medication';
+import Albums from './components/Albums';
 function App() {
   
   
  
   return (
     <>
-    <BrowserRouter>
+     {/* { <BrowserRouter>
     <Routes>
       <Route path="/" element={<Dashboard/>} />
       <Route path="/recognition" element={<Recognition/>}/>
@@ -34,12 +35,14 @@ function App() {
       <Route path='/voice-notes' element={<VoiceNotes/>}/>
       <Route path='/music-therapy' element={<MusicTherapy/>}/>
       <Route path='/activities' element={<Activities/>}/>
-      <Route path='/journal' element={<Journal/>}/>
       <Route path='/schedule' element={<Schedule/>}/>
       <Route path='/quick-actions' element={<QuickActions/>}/>
       <Route path='/tasks' element={<Tasks/>}/>
     </Routes>
-  </BrowserRouter>
+  </BrowserRouter> */}
+     
+    <Albums/> 
+  {/* <Journal/> */}
   
     </>
   );

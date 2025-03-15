@@ -65,7 +65,7 @@ export default function Reminders() {
   return (
     <>
     <Sidebar/>
-    <div className="min-h-screen w-full relative overflow-hidden">
+    <div className="min-h-screen w-full relative overflow-hidden ml-64">
       {/* <Sidebar/> */}
       {/* Beautiful gradient background */}
       <div

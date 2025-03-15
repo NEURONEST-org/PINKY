@@ -34,7 +34,7 @@ export default function Sidebar() {
     { icon: MessageCircle, label: 'Chat', id: 'chat', path: '/chat', gradient: 'from-cyan-500 to-teal-500' },
     
     { icon: Pill, label: 'Medication', id: 'medication', path: '/medication', gradient: 'from-emerald-500 to-green-500' },
-    { icon: Smile, label: 'Mood Tracker', id: 'mood', path: '/mood-tracker', gradient: 'from-rose-500 to-pink-500' },
+    { icon: Smile, label: 'Journal', id: 'mood', path: '/mood-tracker', gradient: 'from-rose-500 to-pink-500' },
     { icon: Clock, label: 'Reminders', id: 'reminders', path: '/reminders', gradient: 'from-pink-500 to-fuchsia-500' },
     { icon: Music, label: 'Music Therapy', id: 'music', path: '/music-therapy', gradient: 'from-fuchsia-500 to-purple-500' },
 
