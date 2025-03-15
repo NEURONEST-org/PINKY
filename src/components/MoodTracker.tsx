@@ -18,7 +18,7 @@ export default function MoodTracker() {
   return (
     <>
     <Sidebar/>
-    <div className={`'bg-white' rounded-xl shadow-lg p-6 mL-60`}>
+    <div className={`'bg-white' rounded-xl shadow-lg p-6 ml-72`}>
       <h2 className={`text-xl font-semibold mb-6  'text-gray-900'`}>
         How are you feeling today?
       </h2>

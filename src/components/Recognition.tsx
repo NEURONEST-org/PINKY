@@ -1,157 +1,185 @@
-import React, { useRef, useState, useEffect } from 'react';
-import Webcam from 'react-webcam';
-import * as faceDetection from '@tensorflow-models/face-detection';
-import * as cocoSsd from '@tensorflow-models/coco-ssd';
-import '@tensorflow/tfjs';
-import { Camera, Eye } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Scan,
+  Camera,
+  ScanFace,
+  Box,
+  Upload,
+  ShieldCheck,
+  Brain,
+  Sparkles,
+  AlertCircle,
+  CheckCircle2,
+  
+} from 'lucide-react';
 import Sidebar from './Sidebar';
 
-
-
 export default function Recognition() {
-  const webcamRef = useRef<Webcam | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [mode, setMode] = useState<'face' | 'object'>('face');
-  const [isDetecting, setIsDetecting] = useState(false);
-  const [detectedObjects, setDetectedObjects] = useState<string[]>([]);
+  const [activeSection, setActiveSection] = useState<'face' | 'object' | null>(null);
 
-  const loadFaceDetector = async () => {
-    const model = await faceDetection.createDetector(
-      faceDetection.SupportedModels.MediaPipeFaceDetector,
-      { runtime: 'tfjs' }
-    );
-    return model;
+  const particles = [...Array(30)].map((_, i) => ({
+    id: i,
+    size: Math.random() * 8 + 4,
+    duration: Math.random() * 20 + 10,
+    initialX: Math.random() * 100,
+    initialY: Math.random() * 100,
+    delay: Math.random() * 5,
+  }));
+
+  const features = {
+    face: [
+      { icon: ScanFace, title: 'Facial Recognition', description: 'Advanced AI-powered facial detection and recognition' },
+      { icon: Brain, title: 'Memory Association', description: 'Links faces with stored memories and relationships' },
+      { icon: ShieldCheck, title: 'Privacy Protected', description: 'Enterprise-grade security for personal data' },
+    ],
+    object: [
+      { icon: Box, title: 'Object Detection', description: 'Identifies everyday objects and their purpose' },
+      { icon: AlertCircle, title: 'Safety Alerts', description: 'Warns about potentially dangerous items' },
+      { icon: Sparkles, title: 'Context Awareness', description: 'Understands object relationships and usage' },
+    ],
   };
-
-  const loadObjectDetector = async () => {
-    const model = await cocoSsd.load();
-    return model;
-  };
-
-  const drawFaceDetections = (detections: faceDetection.Face[], ctx: CanvasRenderingContext2D) => {
-    detections.forEach(detection => {
-      const box = detection.box;
-      ctx.strokeStyle = '#00ff00';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(box.xMin, box.yMin, box.width, box.height);
-    });
-  };
-
-  const drawObjectDetections = (predictions: cocoSsd.DetectedObject[], ctx: CanvasRenderingContext2D) => {
-    predictions.forEach(prediction => {
-      const [x, y, width, height] = prediction.bbox;
-      ctx.strokeStyle = '#00ff00';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(x, y, width, height);
-      ctx.fillStyle = '#00ff00';
-      ctx.fillText(
-        `${prediction.class} ${Math.round(prediction.score * 100)}%`,
-        x,
-        y > 10 ? y - 5 : 10
-      );
-    });
-    setDetectedObjects(predictions.map(p => p.class));
-  };
-
-  const detect = async () => {
-    if (!webcamRef.current || !canvasRef.current || !webcamRef.current.video) return;
-
-    const video = webcamRef.current.video;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    if (mode === 'face') {
-      const detector = await loadFaceDetector();
-      const faces = await detector.detect(video);
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      drawFaceDetections(faces, ctx);
-    } else {
-      const detector = await loadObjectDetector();
-      const predictions = await detector.detect(video);
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      drawObjectDetections(predictions, ctx);
-    }
-  };
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isDetecting) {
-      interval = setInterval(() => {
-        detect();
-      }, 100);
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isDetecting, mode]);
 
   return (
-  <>
-    <Sidebar/>
-    <div className={` rounded-xl shadow-lg p-6 ml-80`}>
-     
-      <div className="flex space-x-4 mb-6">
-        <button
-          onClick={() => setMode('face')}
-          className={`flex items-center px-4 py-2 rounded-lg ${
-            mode === 'face'
-              ? 'bg-purple-600 text-white'
-              : 'bg-gray-100 text-gray-600'
-          }`}
+    <>
+    
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6 relative overflow-hidden">
+      {/* Animated Background Particles */}
+      <Sidebar/>  
+      
+      <div className="max-w-7xl mx-auto ml-72">
+        {/* Header Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
         >
-          <Camera className="h-5 w-5 mr-2" />
-          Face Recognition
-        </button>
-        <button
-          onClick={() => setMode('object')}
-          className={`flex items-center px-4 py-2 rounded-lg ${
-            mode === 'object'
-              ? 'bg-purple-600 text-white'
-              :  'bg-gray-100 text-gray-600'
-          }`}
-        >
-          <Eye className="h-5 w-5 mr-2" />
-          Object Recognition
-        </button>
-      </div>
+          <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
+            Smart Recognition Technology
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Experience the power of advanced AI recognition systems designed to enhance daily life and safety for individuals with dementia.
+          </p>
+        </motion.div>
 
-      <div className="relative">
-        <Webcam
-          ref={webcamRef}
-          className="w-full rounded-lg"
-          mirrored
-        />
-        <canvas
-          ref={canvasRef}
-          className="absolute top-0 left-0 w-full h-full"
-        />
-      </div>
+        {/* Main Recognition Sections */}
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          {/* Face Recognition Section */}
+          <motion.div
+            className="relative"
+            whileHover={{ scale: 1.02 }}
+            onHoverStart={() => setActiveSection('face')}
+            onHoverEnd={() => setActiveSection(null)}
+          >
+            <div className="h-[400px] rounded-3xl overflow-hidden relative group">
+              <img
+                src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=2669&auto=format&fit=crop"
+                alt="Face Recognition"
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 to-purple-900/30 group-hover:from-purple-900/95 group-hover:to-purple-900/40 transition-all duration-500" />
+              
+              <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex items-center mb-4">
+                    <Camera className="w-8 h-8 mr-3" />
+                    <h3 className="text-3xl font-bold">Face Recognition</h3>
+                  </div>
+                  <p className="text-lg text-purple-100">
+                    Advanced facial recognition system that helps identify familiar faces and maintain social connections.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
 
-      <div className="mt-4 flex justify-between items-center">
-        <button
-          onClick={() => setIsDetecting(!isDetecting)}
-          className={`px-6 py-2 ${
-            isDetecting ? 'bg-red-600' : 'bg-purple-600'
-          } text-white rounded-lg hover:opacity-90`}
+          {/* Object Recognition Section */}
+          <motion.div
+            className="relative"
+            whileHover={{ scale: 1.02 }}
+            onHoverStart={() => setActiveSection('object')}
+            onHoverEnd={() => setActiveSection(null)}
+          >
+            <div className="h-[400px] rounded-3xl overflow-hidden relative group">
+              <img
+                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2670&auto=format&fit=crop"
+                alt="Object Recognition"
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/90 to-indigo-900/30 group-hover:from-indigo-900/95 group-hover:to-indigo-900/40 transition-all duration-500" />
+              
+              <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex items-center mb-4">
+                    <Scan className="w-8 h-8 mr-3" />
+                    <h3 className="text-3xl font-bold">Object Recognition</h3>
+                  </div>
+                  <p className="text-lg text-indigo-100">
+                    Smart object detection system that helps identify and understand everyday items and their purposes.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Features Grid */}
+        <AnimatePresence mode="wait">
+          {activeSection && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="grid md:grid-cols-3 gap-6 mb-16"
+            >
+              {features[activeSection].map((feature, index) => (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-purple-100"
+                >
+                  <feature.icon className="w-12 h-12 mb-4 text-purple-600" />
+                  <h4 className="text-xl font-semibold mb-2">{feature.title}</h4>
+                  <p className="text-gray-600">{feature.description}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Demo Video Section */}
+       
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="text-center bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-12 text-white flex flex-col items-center"
         >
-          {isDetecting ? 'Stop Detection' : 'Start Detection'}
-        </button>
-        {mode === 'object' && detectedObjects.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {detectedObjects.map((obj, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm"
-              >
-                {obj}
-              </span>
-            ))}
-          </div>
-        )}
+          <h2 className="text-3xl font-bold mb-6 text-purple-100 ">Contact Us for More Information</h2>
+          <p className="text-xl  text-purple-100">
+            <input type="text" placeholder="Enter your email"  className='bg-white rounded-xl p-2 m-6 w-1/2  top-6 left-6 '/>
+            <input type="text" placeholder="Enter your phone number" className='bg-white rounded-xl p-2 m-6 w-1/2 top-6 left-6 '/>
+            <input type="text" placeholder="Enter your message" className='bg-white rounded-xl p-2 m-6 w-1/2  top-6 left-9 '/>
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.05, backgroundColor: 'white-200' }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-xl text-lg font-semibold hover:shadow-lg transition-shadow"
+          >
+            Send Message
+          </motion.button>
+        </motion.div>
       </div>
     </div>
     </>

@@ -15,7 +15,7 @@ import MusicTherapy from './components/MusicTherapy';
 import VoiceNotes from './components/VoiceNotes';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from './components/Dashboard';
-
+import Medication from './components/Medication';
 function App() {
   
   
@@ -27,6 +27,7 @@ function App() {
       <Route path="/" element={<Dashboard/>} />
       <Route path="/recognition" element={<Recognition/>}/>
       <Route path="/safety-zones" element={<Safety/>}/>
+      <Route path="/medication" element={<Medication/>}/>
       <Route path='/chat' element={<Chat/>}/>
       <Route path='/mood-tracker' element={<MoodTracker/>}/>
       <Route path='/reminders' element={<Reminders/>}/>

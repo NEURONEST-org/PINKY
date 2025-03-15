@@ -14,7 +14,7 @@ export default function Chat() {
 
   return (<>
   <Sidebar/>
-    <div className={`bg-white rounded-xl shadow-lg p-6 ml-60`}>
+    <div className={`bg-white rounded-xl shadow-lg p-6 ml-72`}>
       <div className="flex space-x-4 mb-6">
         <button
           onClick={() => setActiveView('map')}

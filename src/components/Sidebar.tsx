@@ -20,33 +20,33 @@ import {
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  isDarkMode: boolean;
+  
 }
 
-export default function Sidebar({ activeTab, setActiveTab, isDarkMode }: SidebarProps) {
+export default function Sidebar() {
   const location = useLocation();
 
   const navItems = [
-    { icon: Home, label: 'Dashboard', id: 'dashboard', path: '/', gradient: 'from-violet-500 to-purple-500' },
-    { icon: Camera, label: 'Recognition', id: 'recognition', path: '/recognition', gradient: 'from-purple-500 to-indigo-500' },
-    { icon: Map, label: 'Safety Zones', id: 'safety', path: '/safety-zones', gradient: 'from-indigo-500 to-blue-500' },
-    { icon: Gamepad2, label: 'Activities', id: 'activities', path: '/activities', gradient: 'from-blue-500 to-cyan-500' },
+    { icon: Home, label: 'Dashboard', id: 'dashboard', path: '/', gradient: 'from-violet-900 to-purple-600' },
+    { icon: Camera, label: 'Recognition', id: 'recognition', path: '/recognition', gradient: 'from-purple-900 to-indigo-500' },
+    { icon: Map, label: 'Safety Zones', id: 'safety', path: '/safety-zones', gradient: 'from-indigo-900 to-blue-500' },
+    { icon: Gamepad2, label: 'Activities', id: 'activities', path: '/activities', gradient: 'from-blue-900 to-cyan-500' },
     { icon: MessageCircle, label: 'Chat', id: 'chat', path: '/chat', gradient: 'from-cyan-500 to-teal-500' },
-    { icon: Calendar, label: 'Tasks', id: 'tasks', path: '/tasks', gradient: 'from-teal-500 to-emerald-500' },
+    
     { icon: Pill, label: 'Medication', id: 'medication', path: '/medication', gradient: 'from-emerald-500 to-green-500' },
     { icon: Smile, label: 'Mood Tracker', id: 'mood', path: '/mood-tracker', gradient: 'from-rose-500 to-pink-500' },
     { icon: Clock, label: 'Reminders', id: 'reminders', path: '/reminders', gradient: 'from-pink-500 to-fuchsia-500' },
     { icon: Music, label: 'Music Therapy', id: 'music', path: '/music-therapy', gradient: 'from-fuchsia-500 to-purple-500' },
-    { icon: Mic, label: 'Voice Notes', id: 'voice', path: '/voice-notes', gradient: 'from-purple-500 to-violet-500' },
+
     { icon: Settings, label: 'Settings', id: 'settings', path: '/settings', gradient: 'from-gray-500 to-slate-500' },
   ];
 
   return (
     <div
       className={`fixed left-0 top-0 h-full w-72 ${
-        isDarkMode ? 'bg-gray-900/95' : 'bg-white/95'
+        'bg-white/95'
       } shadow-xl overflow-y-auto border-r backdrop-blur-md ${
-        isDarkMode ? 'border-gray-800' : 'border-gray-100'
+       'border-gray-300'
       }`}
     >
       <div className="sticky top-0 z-10 p-6 border-b border-gray-100/10 backdrop-blur-xl bg-opacity-90">
@@ -86,7 +86,6 @@ export default function Sidebar({ activeTab, setActiveTab, isDarkMode }: Sidebar
               <Link
                 key={item.id}
                 to={item.path}
-                onClick={() => setActiveTab(item.id)}
                 className={`
                   block w-full group relative
                   ${isActive ? 'scale-[1.02]' : ''}
@@ -96,19 +95,18 @@ export default function Sidebar({ activeTab, setActiveTab, isDarkMode }: Sidebar
                   className={`
                     absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100
                     transition-opacity duration-300 bg-gradient-to-r ${item.gradient}
-                    ${isDarkMode ? 'opacity-10' : 'opacity-5'}
+                    opacity-20
                   `}
                 />
                 <div
                   className={`
                     relative flex items-center px-4 py-3 rounded-xl
                     transition-all duration-300 ease-out
+                    group-hover:bg-opacity-10
                     ${
                       isActive
                         ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
-                        : isDarkMode
-                        ? 'text-gray-400 hover:text-white'
-                        : 'text-gray-600 hover:text-gray-900'
+                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
                     }
                   `}
                 >
@@ -116,7 +114,7 @@ export default function Sidebar({ activeTab, setActiveTab, isDarkMode }: Sidebar
                     h-5 w-5 mr-3
                     transition-all duration-300
                     group-hover:scale-110 group-hover:rotate-3
-                    ${isActive ? 'text-white' : ''}
+                    ${isActive ? 'text-white' : 'group-hover:text-current'}
                   `} />
                   <span className="font-medium text-sm">{item.label}</span>
                   {isActive && (
