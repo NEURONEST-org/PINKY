@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, User2, X } from 'lucide-react';
-
+import Sidebar from './Sidebar';
 export default function Albums() {
   const [activeTab, setActiveTab] = useState('All Memories');
   const [searchQuery, setSearchQuery] = useState('');
@@ -102,22 +102,23 @@ export default function Albums() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50 p-8 ml-72">
+      <Sidebar/>
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Memory Album</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text mb-2">Memory Album</h1>
           <p className="text-gray-600">Preserve and revisit important memories</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-8">
+        <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
           <div className="flex justify-between items-start mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Memory Album</h2>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text mb-2">Memory Album</h2>
               <p className="text-gray-600">Browse through your collection of memories</p>
             </div>
             <button 
               onClick={() => setShowAddMemory(true)}
-              className="bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2"
+              className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300 transform hover:scale-[1.02]"
             >
               <Plus className="w-5 h-5" />
               Add Memory
@@ -128,21 +129,21 @@ export default function Albums() {
             <input
               type="text"
               placeholder="Search memories, people, or albums..."
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/5"
+              className="w-full px-4 py-3 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-300"
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
 
-          <div className="flex gap-2 mb-8 border-b border-gray-100">
+          <div className="flex gap-2 mb-8 border-b border-pink-100">
             {tabs.map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-6 py-3 text-sm font-medium border-b-2 ${
+                className={`px-6 py-3 text-sm font-medium border-b-2 transition-all duration-300 ${
                   activeTab === tab
-                    ? 'border-black text-black'
-                    : 'border-transparent text-gray-500'
+                    ? 'border-pink-500 text-pink-600'
+                    : 'border-transparent text-gray-500 hover:text-pink-500'
                 }`}
               >
                 {tab}
@@ -153,8 +154,11 @@ export default function Albums() {
           {activeTab === 'People' ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {filteredPeople.map((person, index) => (
-                <div key={index} className="bg-gray-50 rounded-xl p-6 text-center">
-                  <div className="w-16 h-16 rounded-full mx-auto mb-4 overflow-hidden">
+                <div 
+                  key={index} 
+                  className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-6 text-center transform hover:scale-[1.02] transition-all duration-300 hover:shadow-lg"
+                >
+                  <div className="w-16 h-16 rounded-full mx-auto mb-4 overflow-hidden ring-2 ring-pink-200">
                     <img 
                       src={person.image} 
                       alt={person.name}
@@ -162,14 +166,17 @@ export default function Albums() {
                     />
                   </div>
                   <h3 className="font-medium text-gray-900 mb-1">{person.name}</h3>
-                  <p className="text-sm text-gray-500">{person.memories} memories</p>
+                  <p className="text-sm text-pink-600">{person.memories} memories</p>
                 </div>
               ))}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredMemories.map(memory => (
-                <div key={memory.id} className="bg-gray-100 rounded-xl overflow-hidden">
+                <div 
+                  key={memory.id} 
+                  className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl overflow-hidden transform hover:scale-[1.02] transition-all duration-300 hover:shadow-lg"
+                >
                   <div className="relative h-48">
                     <img
                       src={memory.image}
@@ -181,7 +188,7 @@ export default function Albums() {
                     </div>
                   </div>
                   <div className="p-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                    <div className="flex items-center gap-2 text-sm text-pink-600 mb-2">
                       <span>{memory.date}</span>
                     </div>
                     <p className="text-gray-600">{memory.description}</p>
@@ -195,13 +202,13 @@ export default function Albums() {
 
       {/* Add Memory Modal */}
       {showAddMemory && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-white rounded-2xl p-8 max-w-lg w-full mx-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 shadow-xl transform transition-all duration-300">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold">Add New Memory</h3>
+              <h3 className="text-xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text">Add New Memory</h3>
               <button 
                 onClick={() => setShowAddMemory(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-pink-600 transition-colors duration-300"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -217,7 +224,7 @@ export default function Albums() {
                     required
                     value={newMemory.title}
                     onChange={(e) => setNewMemory({...newMemory, title: e.target.value})}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-200"
+                    className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-300"
                   />
                 </div>
                 <div>
@@ -229,7 +236,7 @@ export default function Albums() {
                     required
                     value={newMemory.date}
                     onChange={(e) => setNewMemory({...newMemory, date: e.target.value})}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-200"
+                    className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-300"
                   />
                 </div>
                 <div>
@@ -240,7 +247,7 @@ export default function Albums() {
                     required
                     value={newMemory.description}
                     onChange={(e) => setNewMemory({...newMemory, description: e.target.value})}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-200"
+                    className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-300"
                     rows={3}
                   />
                 </div>
@@ -253,7 +260,7 @@ export default function Albums() {
                     required
                     value={newMemory.image}
                     onChange={(e) => setNewMemory({...newMemory, image: e.target.value})}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-200"
+                    className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-300"
                     placeholder="https://example.com/image.jpg"
                   />
                 </div>
@@ -262,13 +269,13 @@ export default function Albums() {
                 <button
                   type="button"
                   onClick={() => setShowAddMemory(false)}
-                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                  className="px-4 py-2 text-gray-600 hover:text-pink-600 transition-colors duration-300"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-black text-white rounded-lg"
+                  className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-lg transition-all duration-300"
                 >
                   Add Memory
                 </button>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Brain, Puzzle, Grid, Shapes, Calculator } from 'lucide-react';
+import { Brain, Puzzle, Grid, Shapes, Calculator, Gamepad2Icon } from 'lucide-react';
+import Sidebar from './Sidebar';
 
 interface GameState {
   cards?: { id: number; value: string; isFlipped: boolean; isMatched: boolean }[];
@@ -204,6 +205,8 @@ export default function Activities() {
 
     return (
       <div className="p-8">
+      <Sidebar/>
+
         <h2 className="text-2xl font-bold mb-4">Memory Match Game</h2>
         <p className="text-gray-600 mb-8">Match pairs of cards to improve memory</p>
         <div className="grid grid-cols-4 gap-4 max-w-md mx-auto">
@@ -230,6 +233,7 @@ export default function Activities() {
 
     return (
       <div className="p-8">
+      <Sidebar/>
         <h2 className="text-2xl font-bold mb-4">Pattern Sequence</h2>
         <p className="text-gray-600 mb-8">Level {gameState.sequence.level}: Remember and repeat the sequence</p>
         <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
@@ -260,6 +264,7 @@ export default function Activities() {
 
     return (
       <div className="p-8">
+      <Sidebar/>
         <h2 className="text-2xl font-bold mb-4">Shape Recognition</h2>
         <p className="text-gray-600 mb-8">Match the shape shown above</p>
         <div className="text-center mb-8">
@@ -285,6 +290,7 @@ export default function Activities() {
 
     return (
       <div className="p-8">
+      <Sidebar/>
         <h2 className="text-2xl font-bold mb-4">Simple Math</h2>
         <p className="text-gray-600 mb-8">Solve basic arithmetic problems</p>
         <div className="max-w-md mx-auto text-center">
@@ -345,6 +351,7 @@ export default function Activities() {
   if (gameState.currentGame) {
     return (
       <div className="min-h-screen bg-gray-50">
+      <Sidebar/>
         <div className="max-w-4xl mx-auto pt-8">
           <div className="bg-white rounded-2xl shadow-sm">
             {renderGameContent()}
@@ -363,18 +370,20 @@ export default function Activities() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="min-h-screen bg-gray-50 p-8 ml-72 "  >
+      <Sidebar/>
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Cognitive Activities</h1>
-          <p className="text-gray-600">Brain training exercises for cognitive health</p>
+        <div className="mb-8 flex items-center gap-2">
+          <Gamepad2Icon className="w-8 h-8 text-indigo-900" />
+          <h1 className="text-3xl font-bold text-indigo-900 mb-2 block">Cognitive Activities</h1>
+          <p className="text-indigo-800 block ">Brain training exercises for cognitive health</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-8 mb-6">
+        <div className="bg-white rounded-2xl p-8 mb-6  bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Activity Progress</h2>
-              <p className="text-gray-600">Track your progress across different activities</p>
+              <h2 className="text-2xl font-bold text-white">Activity Progress</h2>
+              <p className="text-white">Track your progress across different activities</p>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-gray-900">Level 3</span>
@@ -386,13 +395,13 @@ export default function Activities() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <activity.icon className="w-5 h-5" />
-                  <span className="text-gray-900 font-medium">{activity.title}</span>
+                  <span className=" font-medium">{activity.title}</span>
                 </div>
-                <span className="text-gray-900">{activity.progress}%</span>
+                <span className="bg-gradient-to-r from-purple-600 to-indigo text-white px-3 py-1 rounded-lg">{activity.progress}%</span>
               </div>
               <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-black rounded-full"
+                  className="h-full  bg-gradient-to-r from-green-600 to-green-800 rounded-full"
                   style={{ width: `${activity.progress}%` }}
                 />
               </div>
@@ -405,7 +414,7 @@ export default function Activities() {
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-b from-purple-800 to-purple-900 group-hover:from-purple-800/95 group-hover:to-purple-800/40 ${
                 activeFilter === filter
                   ? 'bg-black text-white'
                   : 'bg-white text-gray-600'
@@ -416,12 +425,12 @@ export default function Activities() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {filteredActivities.map((activity, index) => (
-            <div key={index} className="bg-white rounded-2xl p-6">
-              <div className="flex justify-between items-start mb-4">
+            <div key={index} className="bg-white rounded-2xl p-6 b">
+              <div className="flex justify-between items-start mb-4 ">
                 <h3 className="text-xl font-bold text-gray-900">{activity.title}</h3>
-                <activity.icon className="w-6 h-6 text-gray-900" />
+                <activity.icon className="w-6 h-6 text-gradient-to-r from-pink-500 to-purple-500 " />
               </div>
               <p className="text-gray-600 mb-6">{activity.description}</p>
               
@@ -441,13 +450,13 @@ export default function Activities() {
                 </div>
                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-black rounded-full"
+                    className="h-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full"
                     style={{ width: `${activity.progress}%` }}
                   />
                 </div>
                 <button
                   onClick={() => setGameState({ ...gameState, currentGame: activity.game })}
-                  className="w-full bg-black text-white rounded-xl py-3 mt-4 font-medium"
+                  className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl py-3 mt-4 font-medium"
                 >
                   {activity.progress > 0 ? 'Continue' : 'Start'}
                 </button>

@@ -14,7 +14,8 @@ import {
   Clock,
   Settings,
   Music,
-  Mic
+  Mic,
+  NotebookIcon
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -32,9 +33,9 @@ export default function Sidebar() {
     { icon: Map, label: 'Safety Zones', id: 'safety', path: '/safety-zones', gradient: 'from-indigo-900 to-blue-500' },
     { icon: Gamepad2, label: 'Activities', id: 'activities', path: '/activities', gradient: 'from-blue-900 to-cyan-500' },
     { icon: MessageCircle, label: 'Chat', id: 'chat', path: '/chat', gradient: 'from-cyan-500 to-teal-500' },
-    
+    { icon: NotebookIcon, label: 'Albums', id: 'Albums', path: '/albums', gradient: 'from-teal-500 to-cyan-500' },
     { icon: Pill, label: 'Medication', id: 'medication', path: '/medication', gradient: 'from-emerald-500 to-green-500' },
-    { icon: Smile, label: 'Journal', id: 'mood', path: '/mood-tracker', gradient: 'from-rose-500 to-pink-500' },
+    { icon: Smile, label: 'Journal', id: 'mood', path: '/journal', gradient: 'from-rose-500 to-pink-500' },
     { icon: Clock, label: 'Reminders', id: 'reminders', path: '/reminders', gradient: 'from-pink-500 to-fuchsia-500' },
     { icon: Music, label: 'Music Therapy', id: 'music', path: '/music-therapy', gradient: 'from-fuchsia-500 to-purple-500' },
 

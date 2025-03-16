@@ -23,11 +23,11 @@ function App() {
  
   return (
     <>
-<<<<<<< HEAD
-     {/* { <BrowserRouter>
-=======
-      { <BrowserRouter>
->>>>>>> main
+
+    
+
+       <BrowserRouter>
+
     <Routes>
       <Route path="/" element={<Dashboard/>} />
       <Route path="/recognition" element={<Recognition/>}/>
@@ -42,17 +42,14 @@ function App() {
       <Route path='/schedule' element={<Schedule/>}/>
       <Route path='/quick-actions' element={<QuickActions/>}/>
       <Route path='/tasks' element={<Tasks/>}/>
+      <Route path='/albums' element={<Albums/>}/>
+      <Route path='/journal' element={<Journal/>}/>
     </Routes>
-<<<<<<< HEAD
-  </BrowserRouter> */}
+  </BrowserRouter>
      
-    <Albums/> 
-=======
-  </BrowserRouter> }
-     
-   
->>>>>>> main
-  {/* <Journal/> */}
+    
+
+  
   
     </>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { FileText, Mic, Calendar, Clock, Plus, Square, Play, Pause } from 'lucide-react';
+import Sidebar from './Sidebar';
 
 interface JournalEntry {
   id: string;
@@ -19,13 +20,7 @@ export default function Journal() {
   const [recordingTime, setRecordingTime] = useState(0);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
-  const timerRef = useRef<number | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  const entries: JournalEntry[] = [
+  const [entries, setEntries] = useState<JournalEntry[]>([
     {
       id: '1',
       title: 'Morning Walk',
@@ -55,15 +50,20 @@ export default function Journal() {
       type: 'voice',
       voiceDuration: '1:24'
     }
-  ];
+  ]);
 
-  const stats = {
+  const [stats, setStats] = useState({
     totalEntries: 12,
     thisWeek: 4,
     textEntries: 8,
     voiceEntries: 4,
     streak: 3
-  };
+  });
+
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const timerRef = useRef<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const topics = ['Family', 'Memories', 'Health', 'Activities', 'Nature'];
 
@@ -87,7 +87,6 @@ export default function Journal() {
       mediaRecorder.start();
       setIsRecording(true);
       
-      // Start timer
       let time = 0;
       timerRef.current = window.setInterval(() => {
         time += 1;
@@ -104,7 +103,6 @@ export default function Journal() {
       mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
       setIsRecording(false);
       
-      // Stop timer
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
@@ -128,14 +126,53 @@ export default function Journal() {
     setIsPlaying(!isPlaying);
   };
 
+  const handleSaveEntry = () => {
+    const now = new Date();
+    const timestamp = now.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    });
+
+    const newJournalEntry: JournalEntry = {
+      id: Date.now().toString(),
+      title: newEntry.title,
+      content: newEntry.content,
+      timestamp: `Today, ${timestamp}`,
+      type: entryType,
+      ...(entryType === 'voice' && audioUrl && {
+        voiceDuration: formatTime(recordingTime),
+        audioUrl: audioUrl
+      })
+    };
+
+    setEntries(prevEntries => [newJournalEntry, ...prevEntries]);
+    setStats(prevStats => ({
+      ...prevStats,
+      totalEntries: prevStats.totalEntries + 1,
+      thisWeek: prevStats.thisWeek + 1,
+      [entryType === 'text' ? 'textEntries' : 'voiceEntries']: 
+        prevStats[entryType === 'text' ? 'textEntries' : 'voiceEntries'] + 1
+    }));
+
+    // Reset form
+    setIsNewEntry(false);
+    setNewEntry({ title: '', content: '' });
+    setAudioUrl(null);
+    setRecordingTime(0);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+  };
+
   const renderVoiceRecorder = () => (
-    <div className="border rounded-lg p-6 mb-6 bg-gray-50">
+    <div className="border rounded-lg p-6 mb-6 bg-gradient-to-r from-pink-50 to-purple-50">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Mic className="w-5 h-5 text-indigo-600" />
-          <span className="font-medium">Voice Recording</span>
+          <Mic className="w-5 h-5 text-pink-600" />
+          <span className="font-medium text-pink-800">Voice Recording</span>
         </div>
-        <span className="text-gray-600">{formatTime(recordingTime)}</span>
+        <span className="text-pink-600">{formatTime(recordingTime)}</span>
       </div>
 
       {audioUrl && (
@@ -143,7 +180,7 @@ export default function Journal() {
           <audio ref={audioRef} src={audioUrl} onEnded={() => setIsPlaying(false)} />
           <button
             onClick={togglePlayback}
-            className="flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100"
+            className="flex items-center gap-2 px-4 py-2 bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition-all duration-300"
           >
             {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             {isPlaying ? 'Pause' : 'Play'} Recording
@@ -153,10 +190,10 @@ export default function Journal() {
 
       <button
         onClick={isRecording ? stopRecording : startRecording}
-        className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
           isRecording
-            ? 'bg-red-50 text-red-600 hover:bg-red-100'
-            : 'bg-indigo-600 text-white hover:bg-indigo-700'
+            ? 'bg-red-100 text-red-600 hover:bg-red-200'
+            : 'bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600'
         }`}
       >
         {isRecording ? (
@@ -173,20 +210,20 @@ export default function Journal() {
   );
 
   const renderNewEntryForm = () => (
-    <div className="bg-white rounded-2xl p-8 shadow-sm">
+    <div className="bg-white rounded-2xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="flex items-center gap-2 mb-6">
-        <FileText className="w-6 h-6" />
-        <h2 className="text-2xl font-bold">New Journal Entry</h2>
+        <FileText className="w-6 h-6 text-pink-600" />
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text">New Journal Entry</h2>
       </div>
       <p className="text-gray-600 mb-6">Create a new journal entry</p>
       
       <div className="flex gap-4 mb-6">
         <button
           onClick={() => setEntryType('text')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg ${
+          className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 ${
             entryType === 'text'
-              ? 'bg-indigo-50 text-indigo-700'
-              : 'bg-gray-50 text-gray-600'
+              ? 'bg-gradient-to-r from-pink-100 to-purple-100 text-pink-700'
+              : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
           }`}
         >
           <FileText className="w-5 h-5" />
@@ -194,10 +231,10 @@ export default function Journal() {
         </button>
         <button
           onClick={() => setEntryType('voice')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg ${
+          className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 ${
             entryType === 'voice'
-              ? 'bg-indigo-50 text-indigo-700'
-              : 'bg-gray-50 text-gray-600'
+              ? 'bg-gradient-to-r from-pink-100 to-purple-100 text-pink-700'
+              : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
           }`}
         >
           <Mic className="w-5 h-5" />
@@ -210,7 +247,7 @@ export default function Journal() {
         placeholder="Entry Title"
         value={newEntry.title}
         onChange={(e) => setNewEntry({ ...newEntry, title: e.target.value })}
-        className="w-full mb-4 p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="w-full mb-4 p-3 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-300"
       />
 
       {entryType === 'voice' ? (
@@ -220,7 +257,7 @@ export default function Journal() {
           placeholder="Write your thoughts here..."
           value={newEntry.content}
           onChange={(e) => setNewEntry({ ...newEntry, content: e.target.value })}
-          className="w-full h-48 mb-6 p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+          className="w-full h-48 mb-6 p-3 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-300 resize-none"
         />
       )}
 
@@ -234,18 +271,14 @@ export default function Journal() {
               clearInterval(timerRef.current);
             }
           }}
-          className="px-6 py-2 rounded-lg text-gray-600 hover:bg-gray-50"
+          className="px-6 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition-all duration-300"
         >
           Cancel
         </button>
         <button
-          onClick={() => {
-            // Handle save logic here
-            setIsNewEntry(false);
-            setAudioUrl(null);
-            setRecordingTime(0);
-          }}
-          className="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
+          onClick={handleSaveEntry}
+          disabled={!newEntry.title || (!newEntry.content && !audioUrl)}
+          className="px-6 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Save Entry
         </button>
@@ -256,26 +289,26 @@ export default function Journal() {
   const renderEntryList = () => (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2">
-        <div className="bg-white rounded-2xl p-8 shadow-sm">
+        <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
           <div className="flex items-center gap-2 mb-6">
-            <FileText className="w-6 h-6" />
-            <h2 className="text-2xl font-bold">Journal Entries</h2>
+            <FileText className="w-6 h-6 text-pink-600" />
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text">Journal Entries</h2>
           </div>
           <p className="text-gray-600 mb-6">Record your thoughts and memories</p>
 
           <div className="space-y-6">
             {entries.map((entry) => (
-              <div key={entry.id} className="border-b border-gray-100 last:border-0 pb-6 last:pb-0">
+              <div key={entry.id} className="border-b border-pink-100 last:border-0 pb-6 last:pb-0 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50 rounded-lg p-4 transition-all duration-300">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-xl font-semibold text-gray-900">{entry.title}</h3>
-                  <div className="flex items-center gap-2 text-gray-500 text-sm">
+                  <div className="flex items-center gap-2 text-pink-600 text-sm">
                     <Calendar className="w-4 h-4" />
                     <span>{entry.timestamp}</span>
                   </div>
                 </div>
                 
                 {entry.type === 'voice' ? (
-                  <div className="flex items-center gap-2 text-gray-600">
+                  <div className="flex items-center gap-2 text-pink-600">
                     <Mic className="w-4 h-4" />
                     <span>Voice recording ({entry.voiceDuration})</span>
                   </div>
@@ -283,7 +316,7 @@ export default function Journal() {
                   <p className="text-gray-600 mb-4">{entry.content}</p>
                 )}
 
-                <button className="text-indigo-600 hover:text-indigo-700 font-medium">
+                <button className="text-pink-600 hover:text-pink-700 font-medium transition-all duration-300">
                   View Full Entry
                 </button>
               </div>
@@ -292,7 +325,7 @@ export default function Journal() {
 
           <button
             onClick={() => setIsNewEntry(true)}
-            className="mt-6 w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800"
+            className="mt-6 w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-xl hover:from-pink-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-[1.02]"
           >
             <Plus className="w-5 h-5" />
             New Journal Entry
@@ -301,37 +334,37 @@ export default function Journal() {
       </div>
 
       <div className="space-y-6">
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h2 className="text-xl font-bold mb-2">Entry Summary</h2>
+        <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+          <h2 className="text-xl font-bold mb-2 bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text">Entry Summary</h2>
           <p className="text-gray-600 mb-6">Track your journaling progress</p>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-indigo-50 rounded-xl p-4">
-              <div className="text-3xl font-bold text-indigo-700">{stats.totalEntries}</div>
+            <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-4 transform hover:scale-[1.02] transition-all duration-300">
+              <div className="text-3xl font-bold text-pink-600">{stats.totalEntries}</div>
               <div className="text-sm text-gray-600">Total Entries</div>
             </div>
-            <div className="bg-green-50 rounded-xl p-4">
-              <div className="text-3xl font-bold text-green-700">{stats.thisWeek}</div>
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 transform hover:scale-[1.02] transition-all duration-300">
+              <div className="text-3xl font-bold text-purple-600">{stats.thisWeek}</div>
               <div className="text-sm text-gray-600">This Week</div>
             </div>
-            <div className="bg-purple-50 rounded-xl p-4">
-              <div className="text-3xl font-bold text-purple-700">{stats.textEntries}</div>
+            <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-4 transform hover:scale-[1.02] transition-all duration-300">
+              <div className="text-3xl font-bold text-pink-600">{stats.textEntries}</div>
               <div className="text-sm text-gray-600">Text Entries</div>
             </div>
-            <div className="bg-blue-50 rounded-xl p-4">
-              <div className="text-3xl font-bold text-blue-700">{stats.voiceEntries}</div>
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 transform hover:scale-[1.02] transition-all duration-300">
+              <div className="text-3xl font-bold text-purple-600">{stats.voiceEntries}</div>
               <div className="text-sm text-gray-600">Voice Entries</div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h2 className="text-xl font-bold mb-2">Popular Topics</h2>
+        <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+          <h2 className="text-xl font-bold mb-2 bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text">Popular Topics</h2>
           <div className="flex flex-wrap gap-2">
             {topics.map((topic) => (
               <span
                 key={topic}
-                className="px-4 py-2 bg-gray-50 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-100 cursor-pointer"
+                className="px-4 py-2 bg-gradient-to-r from-pink-50 to-purple-50 text-pink-700 rounded-full text-sm font-medium hover:from-pink-100 hover:to-purple-100 cursor-pointer transition-all duration-300"
               >
                 {topic}
               </span>
@@ -339,10 +372,10 @@ export default function Journal() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h2 className="text-xl font-bold mb-2">Journaling Streak</h2>
+        <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+          <h2 className="text-xl font-bold mb-2 bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text">Journaling Streak</h2>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-indigo-600">{stats.streak}</span>
+            <span className="text-3xl font-bold text-pink-600">{stats.streak}</span>
             <span className="text-gray-600">days in a row</span>
           </div>
           <p className="text-gray-500 text-sm mt-2">Keep writing to increase your streak!</p>
@@ -352,10 +385,11 @@ export default function Journal() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50 p-8 ml-72">
+      <Sidebar/>
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Journal</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text mb-2">Journal</h1>
           <p className="text-gray-600">Record thoughts, memories, and daily experiences</p>
         </div>
 

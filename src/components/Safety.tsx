@@ -37,9 +37,7 @@ export default function Safety() {
     { name: 'Home', address: 'Knowledge Park 3 Greater Noida, Uttar Pradesh', radius: 500 },
     { name: 'Community Center', address: ' Gate 1 Sarojini Marke, Delhi, India ', radius: 300 },
   ];
-<<<<<<< HEAD
 
-=======
   const handleSOS = async () => {
     try {
       const response = await fetch('http://localhost:5000/trigger-sos', {
@@ -61,7 +59,7 @@ export default function Safety() {
       alert(`Failed to send SOS alert: ${(error as Error)?.message || 'Unknown error occurred'}`);
     }
   };
->>>>>>> main
+
   // Animated background particles
   const particles = [...Array(20)].map((_, i) => ({
     id: i,
@@ -246,43 +244,35 @@ export default function Safety() {
               </motion.div>
 
               {/* Quick Actions */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-gradient-to-br from-red-500 to-pink-500 rounded-2xl p-6 shadow-lg text-white"
-              >
-                <div className="flex items-center space-x-2 mb-6">
-                  <AlertCircle className="h-6 w-6" />
-                  <h3 className="text-xl font-semibold">Emergency Alert / SOS</h3>
-                </div>
-                <motion.button
-<<<<<<< HEAD
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 py-3 rounded-xl flex items-center justify-center space-x-2"
-                >
-                  <Heart className="h-5 w-5" />
-                  <span>Send Emergency Alert</span>
-                </motion.button>
-=======
-  whileHover={{ scale: 1.02 }}
-  whileTap={{ scale: 0.98 }}
-  onClick={handleSOS} // Add this line
-  className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 py-3 rounded-xl flex items-center justify-center space-x-2"
+<motion.div
+  initial={{ opacity: 0, x: 20 }}
+  animate={{ opacity: 1, x: 0 }}
+  className="bg-gradient-to-br from-red-500 to-pink-500 rounded-2xl p-6 shadow-lg text-white"
 >
-  <Heart className="h-5 w-5" />
-  <span>Send Emergency Alert</span>
-</motion.button>
->>>>>>> main
-              </motion.div>
+  <div className="flex items-center space-x-2 mb-6">
+    <AlertCircle className="h-6 w-6" />
+    <h3 className="text-xl font-semibold">Emergency Alert / SOS</h3>
+  </div>
+  
+  <motion.button
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
+    onClick={handleSOS} // Ensure onClick is here
+    className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 py-3 rounded-xl flex items-center justify-center space-x-2"
+  >
+    <Heart className="h-5 w-5" />
+    <span>Send Emergency Alert</span>
+  </motion.button>
+</motion.div>
+
             </div>
           </div>
         </div>
       </div>
     </>
   );
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> main
+
+
+
