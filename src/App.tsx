@@ -23,7 +23,11 @@ function App() {
  
   return (
     <>
+<<<<<<< HEAD
      {/* { <BrowserRouter>
+=======
+      { <BrowserRouter>
+>>>>>>> main
     <Routes>
       <Route path="/" element={<Dashboard/>} />
       <Route path="/recognition" element={<Recognition/>}/>
@@ -39,9 +43,15 @@ function App() {
       <Route path='/quick-actions' element={<QuickActions/>}/>
       <Route path='/tasks' element={<Tasks/>}/>
     </Routes>
+<<<<<<< HEAD
   </BrowserRouter> */}
      
     <Albums/> 
+=======
+  </BrowserRouter> }
+     
+   
+>>>>>>> main
   {/* <Journal/> */}
   
     </>

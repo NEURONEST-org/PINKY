@@ -37,7 +37,31 @@ export default function Safety() {
     { name: 'Home', address: 'Knowledge Park 3 Greater Noida, Uttar Pradesh', radius: 500 },
     { name: 'Community Center', address: ' Gate 1 Sarojini Marke, Delhi, India ', radius: 300 },
   ];
+<<<<<<< HEAD
 
+=======
+  const handleSOS = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/trigger-sos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log(data.message);
+      alert(data.message);
+    } catch (error) {
+      console.error('Error sending SOS:', error);
+      alert(`Failed to send SOS alert: ${(error as Error)?.message || 'Unknown error occurred'}`);
+    }
+  };
+>>>>>>> main
   // Animated background particles
   const particles = [...Array(20)].map((_, i) => ({
     id: i,
@@ -232,6 +256,7 @@ export default function Safety() {
                   <h3 className="text-xl font-semibold">Emergency Alert / SOS</h3>
                 </div>
                 <motion.button
+<<<<<<< HEAD
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 py-3 rounded-xl flex items-center justify-center space-x-2"
@@ -239,6 +264,16 @@ export default function Safety() {
                   <Heart className="h-5 w-5" />
                   <span>Send Emergency Alert</span>
                 </motion.button>
+=======
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+  onClick={handleSOS} // Add this line
+  className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 py-3 rounded-xl flex items-center justify-center space-x-2"
+>
+  <Heart className="h-5 w-5" />
+  <span>Send Emergency Alert</span>
+</motion.button>
+>>>>>>> main
               </motion.div>
             </div>
           </div>
@@ -246,4 +281,8 @@ export default function Safety() {
       </div>
     </>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
