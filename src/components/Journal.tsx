@@ -380,6 +380,7 @@ export default function Journal() {
           </div>
           <p className="text-gray-500 text-sm mt-2">Keep writing to increase your streak!</p>
         </div>
+        
       </div>
     </div>
   );

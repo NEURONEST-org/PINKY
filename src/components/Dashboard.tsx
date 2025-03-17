@@ -23,8 +23,8 @@ export default function Dashboard() {
   const images = [
     "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=3271&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1624727828489-a1e03b79bba8?q=80&w=2671&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?q=80&w=2670&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1574618464782-16c2c63c025d?q=80&w=2670&auto=format&fit=crop",
+    "https://plus.unsplash.com/premium_photo-1661769167673-cfdb37f156d8?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://plus.unsplash.com/premium_photo-1682094069738-19a65f3145b9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2670&auto=format&fit=crop"
   ];
   
