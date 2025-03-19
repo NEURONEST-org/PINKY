@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { SignInButton } from '@clerk/clerk-react';
+import { BackgroundBeams } from './ui/background-beams';
 
 export default function Dashboard() {
   const { scrollYProgress } = useScroll();
@@ -93,37 +94,10 @@ export default function Dashboard() {
       <Sidebar />
       
       {/* Main content with proper spacing for sidebar */}
+      <BackgroundBeams/>
       <div className="ml-16 md:ml-64">
         {/* Animated background with enhanced particles */}
-        <div className="fixed inset-0 -z-10 overflow-hidden">
-          <div className="absolute inset-0">
-            {particles.map((particle) => (
-              <motion.div
-                key={particle.id}
-                className="absolute rounded-full bg-gradient-to-br from-purple-400/20 to-pink-400/20 backdrop-blur-sm"
-                style={{
-                  width: particle.size,
-                  height: particle.size,
-                  left: `${particle.initialX}%`,
-                  top: `${particle.initialY}%`,
-                  opacity: particle.opacity,
-                }}
-                animate={{
-                  x: [0, 40, -40, 0],
-                  y: [0, -30, 30, 0],
-                  scale: [1, 1.2, 0.8, 1],
-                  opacity: [particle.opacity, particle.opacity * 2, particle.opacity],
-                }}
-                transition={{
-                  duration: particle.duration,
-                  delay: particle.delay,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
-            ))}
-          </div>
-        </div>
+        
 
         {/* Sign In Button */}
         <div className="absolute top-4 right-4 z-50">

@@ -17,7 +17,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from './components/Dashboard';
 import Medication from './components/Medication';
 import Albums from './components/Albums';
-function App() {
+import Home from './components/Home';
+import Settings from './components/settings';
+  function App() {
   
   
  
@@ -29,7 +31,8 @@ function App() {
        <BrowserRouter>
 
     <Routes>
-      <Route path="/" element={<Dashboard/>} />
+      <Route path="/" element={<Home/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
       <Route path="/recognition" element={<Recognition/>}/>
       <Route path="/safety-zones" element={<Safety/>}/>
       <Route path="/medication" element={<Medication/>}/>
@@ -44,6 +47,7 @@ function App() {
       <Route path='/tasks' element={<Tasks/>}/>
       <Route path='/albums' element={<Albums/>}/>
       <Route path='/journal' element={<Journal/>}/>
+      <Route path='/settings' element={<Settings/>}/>
     </Routes>
   </BrowserRouter>
      
