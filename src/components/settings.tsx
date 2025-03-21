@@ -283,7 +283,7 @@ export default function Settings() {
   };
 
   const renderPatientInfo = () => (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6 animate-fadeIn ml-40">
       <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
         <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text mb-4">
           Patient Information
@@ -1288,7 +1288,7 @@ export default function Settings() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50 p-8 ml-64">
       <Sidebar/>
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">

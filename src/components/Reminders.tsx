@@ -126,7 +126,7 @@ export default function Reminders() {
   return (
     <>
       
-      <div className="min-h-screen w-full relative overflow-hidden ml-20">
+      <div className="min-h-screen w-full relative overflow-hidden ml-30">
         <Sidebar />
         <div className="fixed inset-0 bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
           {[...Array(5)].map((_, i) => (

@@ -9,7 +9,7 @@ from email.mime.multipart import MIMEMultipart
 TWILIO_ACCOUNT_SID = 'AC9fd337e0acd78a985d6afdb991dd4200'
 TWILIO_AUTH_TOKEN = '0d49741b50b2394a9ef6e57d10b15f93'
 TWILIO_PHONE_NUMBER = '+15855413785'
-RECIPIENT_PHONE_NUMBER = '+91738422836523'  # Ensure this is in E.164 format
+RECIPIENT_PHONE_NUMBER = '+917384228365'  # Ensure this is in E.164 format
 
 # Email credentials (replace with your own)
 EMAIL_SENDER = 'neuronest3@gmail.com'  # Your Gmail address
