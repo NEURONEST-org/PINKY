@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Scan,
+ 
   Camera,
   ScanFace,
   Box,
-  Upload,
+ 
   ShieldCheck,
   Brain,
   Sparkles,
   AlertCircle,
-  CheckCircle2,
+ 
   
 } from 'lucide-react';
 import Sidebar from './Sidebar';
+import Form from './form';
 
 export default function Recognition() {
   const [activeSection, setActiveSection] = useState<'face' | 'object' | null>(null);
@@ -244,6 +245,11 @@ export default function Recognition() {
             Send Message
           </motion.button>
         </motion.div>
+
+
+
+
+        <Form/>
       </div>
     </div>
     </>
