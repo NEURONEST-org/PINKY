@@ -16,6 +16,7 @@ import {
   Activity,
   Shield
 } from 'lucide-react';
+import Sidebar from './Sidebar';
 
 interface PatientInfo {
   firstName: string;
@@ -1288,6 +1289,7 @@ export default function Settings() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50 p-8">
+      <Sidebar/>
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text mb-2">
