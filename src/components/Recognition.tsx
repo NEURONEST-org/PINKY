@@ -18,6 +18,19 @@ import Sidebar from './Sidebar';
 export default function Recognition() {
   const [activeSection, setActiveSection] = useState<'face' | 'object' | null>(null);
 
+  function triggerTraining() {
+    fetch("http://localhost:5000/train", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ /* any needed data */ }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
+  }
+
   const particles = [...Array(30)].map((_, i) => ({
     id: i,
     size: Math.random() * 8 + 4,
@@ -65,70 +78,47 @@ export default function Recognition() {
         {/* Main Recognition Sections */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {/* Face Recognition Section */}
-          <motion.div
-            className="relative"
-            whileHover={{ scale: 1.02 }}
-            onHoverStart={() => setActiveSection('face')}
-            onHoverEnd={() => setActiveSection(null)}
-          >
-            <div className="h-[400px] rounded-3xl overflow-hidden relative group">
-              <img
-                src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=2669&auto=format&fit=crop"
-                alt="Face Recognition"
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 to-purple-900/30 group-hover:from-purple-900/95 group-hover:to-purple-900/40 transition-all duration-500" />
-              
-              <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="flex items-center mb-4">
-                    <Camera className="w-8 h-8 mr-3" />
-                    <h3 className="text-3xl font-bold">Face Recognition</h3>
-                  </div>
-                  <p className="text-lg text-purple-100">
-                    Advanced facial recognition system that helps identify familiar faces and maintain social connections.
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
+          {/* Face Recognition Section */}
+<motion.div
+  className="relative"
+  whileHover={{ scale: 1.02 }}
+  onHoverStart={() => setActiveSection('face')}
+  onHoverEnd={() => setActiveSection(null)}
+>
+  <div className="h-[400px] rounded-3xl overflow-hidden relative group">
+    <img
+      src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=2669&auto=format&fit=crop"
+      alt="Face Recognition"
+      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 to-purple-900/30 group-hover:from-purple-900/95 group-hover:to-purple-900/40 transition-all duration-500" />
+    
+    <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center mb-4">
+          <Camera className="w-8 h-8 mr-3" />
+          <h3 className="text-3xl font-bold">Face Recognition</h3>
+        </div>
+        <p className="text-lg text-purple-100">
+          Advanced facial recognition system that helps identify familiar faces and maintain social connections.
+        </p>
 
-          {/* Object Recognition Section */}
-          <motion.div
-            className="relative"
-            whileHover={{ scale: 1.02 }}
-            onHoverStart={() => setActiveSection('object')}
-            onHoverEnd={() => setActiveSection(null)}
-          >
-            <div className="h-[400px] rounded-3xl overflow-hidden relative group">
-              <img
-                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2670&auto=format&fit=crop"
-                alt="Object Recognition"
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/90 to-indigo-900/30 group-hover:from-indigo-900/95 group-hover:to-indigo-900/40 transition-all duration-500" />
-              
-              <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="flex items-center mb-4">
-                    <Scan className="w-8 h-8 mr-3" />
-                    <h3 className="text-3xl font-bold">Object Recognition</h3>
-                  </div>
-                  <p className="text-lg text-indigo-100">
-                    Smart object detection system that helps identify and understand everyday items and their purposes.
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
+        {/* 2. Add the button here */}
+        <button
+          onClick={triggerTraining}
+          className="mt-4 bg-white text-purple-700 font-semibold px-4 py-2 rounded-md shadow hover:bg-purple-100 transition-colors"
+        >
+          Train Model
+        </button>
+      </motion.div>
+    </div>
+  </div>
+</motion.div>
+
         </div>
 
         {/* Features Grid */}
