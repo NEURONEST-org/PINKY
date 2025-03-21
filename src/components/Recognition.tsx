@@ -31,6 +31,23 @@ export default function Recognition() {
       .catch((err) => console.error(err));
   }
 
+  const [message, setMessage] = useState("");
+
+  const triggerDetection = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/detect", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      setMessage(data.message);
+    } catch (error) {
+      setMessage("Error starting object detection.");
+    }
+  };
   const particles = [...Array(30)].map((_, i) => ({
     id: i,
     size: Math.random() * 8 + 4,
@@ -120,6 +137,63 @@ export default function Recognition() {
 </motion.div>
 
         </div>
+        
+    <div>
+      {/* Main Recognition Section */}
+      <div className="grid md:grid-cols-2 gap-8 mb-16">
+        {/* Face Recognition Section */}
+        <motion.div
+          className="relative"
+          whileHover={{ scale: 1.02 }}
+          onHoverStart={() => setActiveSection("face")}
+          onHoverEnd={() => setActiveSection(null)}
+        >
+          <div className="h-[400px] rounded-3xl overflow-hidden relative group">
+            <img
+              src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=2669&auto=format&fit=crop"
+              alt="Face Recognition"
+              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 to-purple-900/30 group-hover:from-purple-900/95 group-hover:to-purple-900/40 transition-all duration-500" />
+
+            <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex items-center mb-4">
+                  <Camera className="w-8 h-8 mr-3" />
+                  <h3 className="text-3xl font-bold">Object Recognition</h3>
+                </div>
+                <p className="text-lg text-purple-100">
+                  Advanced object detection system that identifies objects in real-time.
+                </p>
+
+                {/* Train Model Button */}
+                <button
+                  onClick={triggerTraining}
+                  className="mt-4 bg-white text-purple-700 font-semibold px-4 py-2 rounded-md shadow hover:bg-purple-100 transition-colors"
+                >
+                  Train Model
+                </button>
+
+                {/* Start Detection Button */}
+                <button
+                  onClick={triggerDetection}
+                  className="mt-4 bg-green-500 text-white font-semibold px-4 py-2 rounded-md shadow hover:bg-green-600 transition-colors ml-4"
+                >
+                  Start Detection
+                </button>
+
+                {/* Message */}
+                {message && <p className="mt-2 text-purple-200">{message}</p>}
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
 
         {/* Features Grid */}
         <AnimatePresence mode="wait">
