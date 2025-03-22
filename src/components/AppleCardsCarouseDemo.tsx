@@ -3,6 +3,7 @@
 import React from "react";
 import { Carousel, Card } from "./ui/apple-cards-carousel";
 import { Image } from "lucide-react";
+import logo from './logo-png.png'
 
 export function AppleCardsCarouselDemo() {
   const cards = data.map((card, index) => (
@@ -22,7 +23,7 @@ export function AppleCardsCarouselDemo() {
 const DummyContent = () => {    
   return (
     <>
-      {[...new Array(3).fill(1)].map((_, index) => {
+      {[...new Array(1).fill(1)].map((_, index) => {
         return (
           <div
             key={"dummy-content" + index}
@@ -30,15 +31,14 @@ const DummyContent = () => {
           >
             <p className="text-neutral-600 text-base md:text-2xl font-sans max-w-3xl mx-auto">
               <span className="font-bold text-neutral-700">
-                The first rule of Apple club is that you boast about Apple club.
+              Dementia patients struggle with memory loss, daily task management, and recognizing loved ones. Traditional reminders are ineffective, and there are safety concerns such as wandering. Additionally, emotional well-being and cognitive stimulation are often neglected.
               </span>{" "}
-              Keep a journal, quickly jot down a grocery list, and take amazing
-              class notes. Want to convert those notes to text? No problem.
-              Langotiya jeetu ka mara hua yaar is ready to capture every
-              thought.
+              NeuroNest is an AI-powered mobile/web application that provides adaptive reminders, facial recognition, emergency tracking, and emotional well-being support to help dementia patients and caregivers manage daily life efficiently.
+
+
             </p>
             <img
-              src="https://assets.aceternity.com/macbook.png"
+              src={logo}
               alt="Macbook mockup from Aceternity UI"
               height="500"
               width="500"
