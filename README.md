@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="LOGO.jpeg" alt="Project Logo" width="150">
+</p>
+
+<h1 align="center">NEURONEST</h1>
+
 # 🧠🏠 NEURONEST - AI-Powered Dementia Care Platform
 
 ## 🌟 Transforming Dementia Care Through Technology
