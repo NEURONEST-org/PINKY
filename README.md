@@ -1,7 +1,5 @@
 # 🧠🏠 NEURONEST - AI-Powered Dementia Care Platform
 
-![NeuroNest Banner](https://raw.githubusercontent.com/yourusername/neuro-nest/main/NEURONEST_poster.png)
-
 ## 🌟 Transforming Dementia Care Through Technology
 
 NEURONEST is an innovative AI-powered platform designed to enhance the quality of life for dementia patients and their caregivers. Our solution combines cutting-edge technology with compassionate care to provide safety, cognitive stimulation, and emotional support.
@@ -18,8 +16,6 @@ NEURONEST is an innovative AI-powered platform designed to enhance the quality o
 - **Safe Zones**: Geofencing alerts when patients leave designated areas
 - **Emergency SOS**: One-touch emergency alerts with location sharing
 
-![Safety Features](https://raw.githubusercontent.com/yourusername/neuro-nest/main/SOS_Tracker-min.jpg)
-
 ### 💊 Medication Management
 - Personalized medication reminders
 - Dosage tracking and history
@@ -31,14 +27,10 @@ NEURONEST is an innovative AI-powered platform designed to enhance the quality o
 - Pattern recognition exercises
 - Progress tracking and adaptive difficulty
 
-![Activities](https://raw.githubusercontent.com/yourusername/neuro-nest/main/Activities-min.png)
-
 ### 📔 Digital Journaling
 - Voice and text journal entries
 - Memory album creation
 - Sentiment analysis for caregiver insights
-
-![Journaling](https://raw.githubusercontent.com/yourusername/neuro-nest/main/Voice_Journal-min.png)
 
 ### 🎵 Therapeutic Features
 - Music therapy playlists
