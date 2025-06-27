@@ -20,7 +20,7 @@ export default function Recognition() {
   const [activeSection, setActiveSection] = useState<'face' | 'object' | null>(null);
 
   function triggerTraining() {
-    fetch("http://localhost:5000/train", {
+    fetch("https://36752693-56b3-4556-b04c-0fee3e67c99e-00-31p7rxt0d6xvn.sisko.replit.dev/train", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function Recognition() {
 
   const triggerDetection = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/detect", {
+      const response = await fetch("https://36752693-56b3-4556-b04c-0fee3e67c99e-00-31p7rxt0d6xvn.sisko.replit.dev/detect", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
